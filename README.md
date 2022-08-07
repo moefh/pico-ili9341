@@ -10,29 +10,31 @@ Initially the plan was to use PIO and DMA to send the data to make things fast -
 
 The pin connections are:
 
+![ILI9341 board pinout](images/lcd-pinout.jpg)
+
 |  Pico GPIO | ILI9341 module pin | used for                           |
 |-----------:|--------------------|------------------------------------|
-|          2 | D0                 | command bit 0 / unused red bit 0   |
-|          3 | D1                 | command bit 1 / unused red bit 1   |
-|          4 | D5                 | command bit 5 / unused green bit 0 |
-|          5 | D6                 | command bit 6 / unused green bit 1 |
-|          6 | D7                 | command bit 7 / unused green bit 2 |
-|          7 | D2                 | command bit 2 / red bit 2          |
-|          8 | D3                 | command bit 3 / red bit 3          |
-|          9 | D4                 | command bit 4 / red bit 4          |
-|         10 | D8                 | green bit 3                        |
-|         11 | D9                 | green bit 4                        |
-|         12 | D10                | green bit 5                        |
-|         13 | D14                | blue bit 3                         |
-|         14 | D15                | blue bit 4                         |
+|          2 | DB0                | command bit 0 / unused red bit 0   |
+|          3 | DB1                | command bit 1 / unused red bit 1   |
+|          4 | DB5                | command bit 5 / unused green bit 0 |
+|          5 | DB6                | command bit 6 / unused green bit 1 |
+|          6 | DB7                | command bit 7 / unused green bit 2 |
+|          7 | DB2                | command bit 2 / red bit 2          |
+|          8 | DB3                | command bit 3 / red bit 3          |
+|          9 | DB4                | command bit 4 / red bit 4          |
+|         10 | DB8                | green bit 3                        |
+|         11 | DB9                | green bit 4                        |
+|         12 | DB10               | green bit 5                        |
+|         13 | DB14               | blue bit 3                         |
+|         14 | DB15               | blue bit 4                         |
 |         15 | RST                | reset                              |
 |         16 | CS                 | chip select                        |
 |         17 | RS                 | command/data select                |
 |         18 | WR                 | write select                       |
 |         19 | RD                 | read select                        |
-|        GND | D11                | unused blue bit 0                  |
-|        GND | D12                | unused blue bit 1                  |
-|        GND | D13                | unused blue bit 2                  |
+|        GND | DB11               | unused blue bit 0                  |
+|        GND | DB12               | unused blue bit 1                  |
+|        GND | DB13               | unused blue bit 2                  |
 
 The color bits marked "unused" are driven low when sending data, so only 8 color bits contain actual color data (3 red, 3 green and 2 blue).
 
