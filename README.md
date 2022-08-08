@@ -1,14 +1,14 @@
 # pico-ili9341
 
-This is a demo using the Raspberry Pi Pico to send images to an ILI9341 LCD controller in 320x240 at 60 fps using the parallel bit bus.
+This is a demo using the Raspberry Pi Pico to send images to an ILI9341 LCD controller in 320x240 at 60 fps using the parallel bus.
 
 ![Screen](images/running.jpg)
 
-This demo uses 8 bits of color per pixel (even though the ILI9341 supports 16 or 18 bits) to save memory in the Pico, so we can have two framebuffers. This way we can send one framebuffer to the ILI9341 while we draw the next one. We put the ILI9341 in 16 bit color mode, but use only 3 red bits, 3 green bits and 2 blue bits, all the other low color bits are set to 0. This gets us 256 colors, an improvement over my [VGA code](https://github.com/moefh/pico-loser) which gets only 64 colors (since there we use 2 bits for vsync/hsync, leaving 6 bits for color data).
+This demo uses 8 color bits per pixel (even though the ILI9341 supports 16 or 18 bits) to save memory in the Pico, so we can have two framebuffers. This way we can send one framebuffer to the ILI9341 while we draw the next one. We put the ILI9341 in 16 bit color mode, but use only 3 red bits, 3 green bits and 2 blue bits, all the other low color bits are set to 0. This gets us 256 colors, an improvement over my [VGA code](https://github.com/moefh/pico-loser) which gets only 64 colors (since there we use 2 bits for vsync/hsync, leaving 6 bits for color data).
 
 Initially the plan was to use PIO with DMA to make things fast, that's why the pin connections between the Pico and the ILI9341 are all out of order (all the high order bits for the color components must use sequential GPIO pins in order to use PIO). It turns out that just bit-banging the data out is fast enough to get 60 frames per second, so we're currently not using PIO or DMA (bit banging is fast enough for about 130fps, the bottleneck is copying the images from the flash to the framebuffer).
 
-The pin connections are:
+Pin connections between the Pico and the LCD module:
 
 ![ILI9341 board pinout](images/lcd-pinout.jpg)
 
@@ -36,7 +36,6 @@ The pin connections are:
 |        GND | DB12               | unused blue bit 1                  |
 |        GND | DB13               | unused blue bit 2                  |
 
-The color bits marked "unused" are driven low when sending data, so only 8 color bits contain actual color data (3 red, 3 green and 2 blue).
+The color bits marked "unused" are driven low when sending color data, so only 8 color bits contain actual color data (3 red, 3 green and 2 blue).
 
 ![Screen](images/board.jpg)
-
